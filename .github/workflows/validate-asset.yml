@@ -1,0 +1,38 @@
+# Reusable workflow: fails when the calling repo's ASSET.md is missing or invalid.
+# Asset repos call it from .github/workflows/asset.yml
+# (copy templates/asset-repo/.github/workflows/asset.yml). No secrets needed.
+name: Validate ASSET.md
+
+on:
+  workflow_call:
+    inputs:
+      asset-path:
+        description: Path to ASSET.md in the calling repo
+        type: string
+        default: ASSET.md
+      schema-ref:
+        description: vivid-asset-schema branch, tag, or commit to validate against
+        type: string
+        default: main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Validate ASSET.md
+        env:
+          ASSET_PATH: ${{ inputs.asset-path }}
+          SCHEMA_REF: ${{ inputs.schema-ref }}
+        run: npx --yes "github:Vivid-Technologies/vivid-asset-schema#${SCHEMA_REF}" "$ASSET_PATH"

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Vivid-Technologies/vivid-asset-schema/blob/main/schema/asset.schema.json",
+  "title": "VividGovTech asset manifest (ASSET.md front matter)",
+  "description": "Front matter of the ASSET.md file at the root of every asset repo. The body must also contain the sections: What it shows, How to deploy, What's faked or hardcoded, Known gaps.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "summary",
+    "type",
+    "vertical",
+    "platform",
+    "depends_on",
+    "org_requirements",
+    "sanitized",
+    "status",
+    "owner",
+    "last_verified"
+  ],
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 80
+    }
+  },
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/slug",
+      "description": "Unique, kebab-case. Becomes catalog/<id>.md and the wikilink target [[<id>]]."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[^\\n]+$",
+      "description": "One line."
+    },
+    "type": {
+      "enum": ["demo", "lwc", "portal", "website", "data-model", "integration"]
+    },
+    "vertical": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" },
+      "description": "e.g. courts, code-enforcement, permitting, licensing. Each links to verticals/<value>."
+    },
+    "platform": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" },
+      "description": "e.g. salesforce, experience-cloud, mulesoft, esri, box."
+    },
+    "patterns": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" },
+      "description": "Optional. Reusable patterns this asset demonstrates. Each links to patterns/<value>."
+    },
+    "depends_on": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" },
+      "description": "Asset ids this asset needs. Use [] when there are none."
+    },
+    "org_requirements": {
+      "description": "Licenses, features, or settings the target org needs. A string, or a list of strings. Use \"none\" when there are none.",
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      ]
+    },
+    "sanitized": {
+      "type": "boolean",
+      "description": "true only after a person has reviewed the repo for client names, credentials, and hardcoded IDs."
+    },
+    "status": {
+      "enum": ["demo-grade", "reusable", "packaged"]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "GitHub handle of the person responsible, e.g. @jdoe."
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date (YYYY-MM-DD) the asset was last deployed and checked."
+    }
+  }
+}

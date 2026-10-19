@@ -1,0 +1,16 @@
+# Copy to .github/workflows/asset.yml in every asset repo.
+# Fails the PR when ASSET.md is missing or invalid. No secrets needed.
+name: ASSET.md
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    uses: Vivid-Technologies/vivid-asset-schema/.github/workflows/validate-asset.yml@main
