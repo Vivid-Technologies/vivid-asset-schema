@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Vivid-Technologies/vivid-asset-schema/blob/main/schema/asset.schema.json",
   "title": "VividGovTech asset manifest (ASSET.md front matter)",
-  "description": "Front matter of the ASSET.md file at the root of every asset repo. The body must also contain the sections: What it shows, How to deploy, What's faked or hardcoded, Known gaps.",
+  "description": "Front matter of the ASSET.md file at the root of every asset repo. The body must also contain the sections: What it shows, How to deploy, What's faked or hardcoded, Known gaps. The validator also rejects Salesforce org URLs and org IDs anywhere in the file.",
   "type": "object",
   "additionalProperties": false,
   "required": [

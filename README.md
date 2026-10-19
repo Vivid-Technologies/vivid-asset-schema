@@ -46,6 +46,12 @@ Unknown fields are rejected.
 Required body sections, each non-empty: `## What it shows`, `## How to deploy`,
 `## What's faked or hardcoded`, `## Known gaps`.
 
+**No org URLs or org IDs.** ASSET.md must not contain a Salesforce org or site
+hostname (anything under `*.my.salesforce.com`, `*.force.com`, `*.my.site.com`,
+and similar) or an org ID (`00D…`). Refer to orgs by alias instead. Shared hosts
+like `login.salesforce.com` and `developer.salesforce.com` are fine. This repo's
+own tests fail if any tracked file contains an org URL or ID.
+
 ## Develop
 
 ```bash

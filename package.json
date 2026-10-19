@@ -1,6 +1,6 @@
 {
   "name": "vivid-asset-schema",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ASSET.md schema and validator for VividGovTech asset repos.",
   "type": "module",
   "engines": {
